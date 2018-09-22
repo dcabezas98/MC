@@ -1,0 +1,179 @@
+\documentclass[12pt,spanish]{article}
+
+% aprovechamiento de la p\'agina -- fill an A4 (210mm x 297mm) page
+% Note: 1 inch = 25.4 mm = 72.27 pt
+% 1 pt = 3.5 mm (approx)
+
+% vertical page layout -- one inch margin top and bottom
+\topmargin      -10 mm   % top margin less 1 inch
+\headheight       0 mm   % height of box containing the head
+\headsep          0 mm   % space between the head and the body of the page
+\textheight     255 mm   % the height of text on the page
+\footskip         7 mm   % distance from bottom of body to bottom of foot
+
+% horizontal page layout -- one inch margin each side
+\oddsidemargin    0 mm     % inner margin less one inch on odd pages
+\evensidemargin   0 mm     % inner margin less one inch on even pages
+\textwidth      159 mm     % normal width of text on page
+
+\setlength{\parindent}{0pt}
+
+\usepackage[doument]{ragged2e}
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,mathtools}
+\usepackage{amsfonts,amssymb,latexsym}
+\usepackage{enumerate}
+\usepackage[dvips,usenames]{color}
+\definecolor{RojoAnayelRey}{rgb}{1,.25,.25}
+\usepackage{tikz}
+\usepackage[bookmarks=true,
+            bookmarksnumbered=false, % true means bookmarks in 
+                                     % left window are numbered                         
+            bookmarksopen=false,     % true means only level 1
+                                     % are displayed.
+            colorlinks=true,
+            linkcolor=webred]{hyperref}
+\definecolor{webgreen}{rgb}{0, 0.5, 0} % less intense green
+\definecolor{webblue}{rgb}{0, 0, 0.5}  % less intense blue
+\definecolor{webred}{rgb}{0.5, 0, 0}   % less intense red
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{MistyRose}{RGB}{255,228,225}
+\definecolor{LightCyan}{RGB}{224,255,255}
+
+% \usepackage{beton}
+% \usepackage[T1]{fontenc}
+
+% Theorem environments
+
+%% \theoremstyle{plain} %% This is the default
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposici\'on}
+%\newtheorem{ax}{Axioma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{algorithm}{\textrm{\bf Algoritmo}}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{exercise}{Ejercicio}%[section]
+%\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{solution}{\begin{proof}[Solución]}{\end{proof}}
+\newtheorem*{notation}{Notaci\'on}
+
+%\numberwithin{equation}{section}
+
+%\newcommand{\regla}[2]{
+%\begin{array}{c}
+%#1\\
+%\hline
+%#2\\
+%\end{array}
+%}
+\begin{document}
+
+\title{Modelos de Computación: \\ Relación de problemas 1}
+\author{David Cabezas Berrido}
+\date{\vspace{-5mm}}
+\maketitle
+
+\setcounter{exercise}{12}
+\begin{exercise}~ Sí que existe un procedimitendo algorítmico para
+  comprobar si dos homomorfismos $f,g:A^*\rightarrow B^*$ son iguales,
+  puesto que basta comprobar que $f|_A = g|_A$. Para comprobar esto
+  sabemos que existe un algoritmo porque $A$ es finito, obviamente
+  esta condición es necesaria, probemos que es suficiente
+  ($f|_A = g|_A \implies f=g$). \\
+
+Tomemos $x \in A^*$, será de la forma $x=a_1a_2\ldots a_m$ para algún
+$m\geq 0$ y con $a_i \in A \ \forall i=1,\ldots,m$.  Usando la
+condición y que $f$ y $g$ son homomorfismos tenemos
+\[f(x)=f(a_1a_2\ldots a_m)=f(a_1)f(a_2)\ldots
+  f(a_m)=g(a_1)g(a_2)\ldots g(a_m)=g(a_1a_2\ldots a_m)=g(x)\]
+como queríamos.
+\end{exercise}
+~
+\setcounter{exercise}{15}
+\begin{exercise}~ La gramática $G=(\{S,A\},\{a,b\},P,S)$ donde \\
+  $P=\{S\rightarrow abAS, abA\rightarrow baab, S \rightarrow a, A
+  \rightarrow b\}$ genera el lenguaje
+  \[L=\{u_1u_2\ldots u_na: n\geq 0, u_i \in \{baab,abb\} \ \forall
+    i=1,\ldots,n\}\]
+
+  La idea es que una $S$, siempre produce a la derecha otra $S$ o una
+  $a$, luego cualquier palabra generada debe terminar en $a$. Para
+  generar las secuencias $baab$ y $abb$ a la izquierda de $S$ se
+  deriva $S \implies abAS \implies baabS$ ó
+  $S \implies abAS \implies abbS$. Como no hay más reglas de
+  derivación, estas son las únicas secuencias que se pueden generar.
+\end{exercise}
+~
+\begin{exercise}~ La gramática $G=(V,T,P,S)$ donde:
+  \begin{itemize}
+  \item $V=\{<numero>,<digito>\}$
+  \item $T=\{0,1,2,3,4,5,6,7,8,9\}$
+  \item $S=<numero>$
+  \item $P=\{<numero> \rightarrow <numero><digito>, \\
+    <numero>\rightarrow <digito>, \\ <digito> \rightarrow
+    0|1|2|3|4|5|6|7|8|9\}$
+  \end{itemize}
+
+  genera el lenguaje de los números naturales. Es claro que cualquier
+  palabra generada va a ser una secuencia de dígitos correspondiente a
+  cualquier número natural. Además podemos generar cualquier secuencia
+  de dígitos de derecha a izquierda, luego cualquier número natural es
+  una palabra del lenguaje generado.
+\end{exercise}
+~
+\begin{exercise}~ La gramática $G=(\{A,S\},\{a,b\},P,S)$ donde \\
+  $P=\{S\rightarrow aS, S \rightarrow aA, A \rightarrow bA, A
+  \rightarrow b\}$ genera el lenguaje $L=\{a^nb^m: n,m \geq 1\}$.
+  Partiendo desde $S$ puedo generar a la izquierda todas las $a$ que
+  quiera hasta generar una $A$ a la derecha (se genera una $a$ como
+  mínimo), desde $A$ puedo generar todas las $b$ que quiera a la
+  izquierda (a continuación de las $a$) hasta finalizar (por lo menos
+  se genera una $b$).
+\end{exercise}
+~
+\begin{exercise}~ Sobre alfabeto $\{a,b,c\}$, una gramática lineal por
+  la derecha o independiente del contexto que genere el lenguaje $L$
+  será $G=(\{S,X,Y\},\{a,b,c\},P,S)$ donde
+  \begin{itemize}
+  \item $L$ es el lenguaje de las palabras que no contienen dos
+    símbolos $b$ consecutivos:
+    $P=\{S\rightarrow aS|bX|cS|\varepsilon, \ X\rightarrow
+    aS|cS|\varepsilon\}$.
+  \item $L$ es el lenguaje de las palabras que contienen dos símbolos
+    $b$ consecutivos: \\
+    $P=\{S\rightarrow aS|bX|cS, \ X\rightarrow aS|bY|cS, \ Y
+    \rightarrow aY|bY|cY|\varepsilon\}$
+  \item $L$ es el lenguaje de las palabras que contienen un número
+    impar de símbolos $c$:
+    $P=\{S\rightarrow aS|bS|cX, \ X\rightarrow aX|bX|cS|\varepsilon\}$
+  \item $L$ es el lenguaje de las palabras que no contienen el mismo
+    número de símbolos $b$ que de símbolos $c$:
+
+    Definiré dos gramáticas, la que genera las palabras que contienen
+    más símbolos $b$ que símbolos $c$ y la que genera las palabras que
+    contienen más símbolos $c$ que símbolos $b$.
+    \[P_b=\{S_b\rightarrow aS_b|bY|cXX, \ X \rightarrow YX|bY, \ Y
+      \rightarrow aY|bY|cX|\varepsilon\}\] Se puede generar cualquier
+    secuencia de izquierda a derecha, pero cada vez que se añade una
+    $c$ aparecen $X$ que sólo desaparecen añadiendo una $b$. Del
+    mismo modo definimos
+    \[P_c=\{S_c\rightarrow aS_c|bX'X'|cY', \ X' \rightarrow Y'X'|cY',
+      \ Y' \rightarrow aY'|bX'|cY'|\varepsilon\}\] Cualquier palabra
+    generada por estas reglas tendrá más símbolos $b$ que símbolos $c$
+    o viceversa, pero siempre tendrá distinto número de símbolos $b$ y
+    $c$. Por tanto, sólo tenemos que unir ambas gramáticas:
+    $P=\{S\rightarrow S_b|S_c\} \cup P_b \cup P_c$
+  \end{itemize}
+\end{exercise}
+
+\end{document}
