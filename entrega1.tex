@@ -163,17 +163,16 @@ como queríamos.
     más símbolos $b$ que símbolos $c$ y la que genera las palabras que
     contienen más símbolos $c$ que símbolos $b$.
     \[P_b=\{S_b\rightarrow aS_b|bY|cXX, \ X \rightarrow YX|bY, \ Y
-      \rightarrow aY|bY|cX|Xc|\varepsilon\}\] Se puede generar
-    cualquier secuencia de izquierda a derecha (excepto si termina por
-    $c$, que se genera primero la $c$ final), pero cada vez que se
+      \rightarrow YY|a|b|cX|Xc|\varepsilon\}\] Se puede generar
+    cualquier secuencia, pero cada vez que se
     añade una $c$ aparecen $X$ que sólo desaparecen añadiendo una
     $b$. Del mismo modo definimos
     \[P_c=\{S_c\rightarrow aS_c|bX'X'|cY', \ X' \rightarrow Y'X'|cY',
-      \ Y' \rightarrow aY'|bX'|X'b|cY'|\varepsilon\}\] Cualquier palabra
-    generada por estas reglas tendrá más símbolos $b$ que símbolos $c$
-    o viceversa, pero siempre tendrá distinto número de símbolos $b$ y
-    $c$. Por tanto, sólo tenemos que unir ambas gramáticas:
-    $P=\{S\rightarrow S_b|S_c\} \cup P_b \cup P_c$
+      \ Y' \rightarrow Y'Y'|a|bX'|X'b|c|\varepsilon\}\] Cualquier
+    palabra generada por estas reglas tendrá más símbolos $b$ que
+    símbolos $c$ o viceversa, pero siempre tendrá distinto número de
+    símbolos $b$ y $c$. Por tanto, sólo tenemos que unir ambas
+    gramáticas: $P=\{S\rightarrow S_b|S_c\} \cup P_b \cup P_c$
   \end{itemize}
 \end{exercise}
 
