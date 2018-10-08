@@ -157,7 +157,40 @@ $M_n=(\{q_0,\ldots,q_{n-1}\},\{a\},q_0,\delta_n,\{q_0\})$ con
 \\ $\delta_n(q_i,a)=q_{(i+1)\%n}$ $\forall i=0,\ldots,n-1$ es un
 autómata finito determinista que reconoce el lenguaje $B_n$
 $\forall n\geq 2$.
-
 \end{exercise}
+
+\begin{exercise}~ Dado un lenguaje regular $L$, probaremos que los
+  siguientes lenguajes son regulares \\
+  
+  $a) NOPREFIJO(L)=\{u\in L \ |$ ningún prefijo propio de $u$ pertenece a $L\}$ \\
+
+  Buscamos eliminar las palabras del lenguaje que tienen prefijos
+  propios que pertenecen al lenguaje, podemos conseguir esto con tan
+  sólo hacer inaccesibles algunos de los estados finales del autómata.
+
+  Supongamos que $M=(Q,A,q_0,\delta,F)$ es un autómata finito
+  determinista que reconoce a $L$. Construimos
+  $M'=(Q\cup\{p\},A,q_0,\delta',F)$ y definimos $\delta'$ de la
+  siguiente forma
+  \begin{align*}
+    \delta'(f,a)=&p \quad \forall f \in F, \ \forall a \in A \\
+    \delta'(p,a)=&p \quad \forall a \in A \\
+    \delta'(q,a)=&\delta(q,a) \quad \text{en el resto de casos}
+  \end{align*}
+  Si $u$ es aceptada por $M'$, significa que $\delta'(q_0,u) \in F$,
+  además no hemos pasado por ningún estado final en medio (de haberlo
+  hecho acabaría ciclando en $p$), por lo que siempre hemos aplicado
+  la definición del resto de casos, esto significa que ningún prefijo
+  propio de $u$ es aceptado por $M'$ y que todas las palabras
+  aceptadas por $M'$ son de $L$.
+
+  Resumiendo, hemos encontrado un autómata finito determinista que
+  reconoce $NOPREFIJO(L)$, luego es regular. \\
+
+  $b) NOEXTENSION(L)=\{u\in L \ | \ u$ no es prefijo propio de ninguna
+  palabra de $L\}$ \\  
+
+  
+\end{exercise} 
 
 \end{document}
