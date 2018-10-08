@@ -158,14 +158,16 @@ $M_n=(\{q_0,\ldots,q_{n-1}\},\{a\},q_0,\delta_n,\{q_0\})$ con
 autómata finito determinista que reconoce el lenguaje $B_n$
 $\forall n\geq 2$. \\
 
-También puede razonarse que $B_n=(a_1a_2\ldots a_n)*$ donde
+También puede razonarse que $B_n=(a_1a_2\ldots a_n)^*$ donde
 $a_i=a \ \forall i$.
 \end{exercise}
+
+~
 
 \begin{exercise}~ Dado un lenguaje regular $L$, probaremos que los
   siguientes lenguajes son regulares \\
   
-  $a) NOPREFIJO(L)=\{u\in L \ |$ ningún prefijo propio de $u$ pertenece a $L\}$ \\
+  $a) \ NOPREFIJO(L)=\{u\in L \ |$ ningún prefijo propio de $u$ pertenece a $L\}$ \\
 
   Buscamos eliminar las palabras del lenguaje que tienen prefijos
   propios que pertenecen al lenguaje, podemos conseguir esto con tan
@@ -190,7 +192,7 @@ aceptadas por $M'$ son de $L$. \\
   Resumiendo, hemos encontrado un autómata finito determinista que
 reconoce $NOPREFIJO(L)$, luego es regular. \\
 
-  $b) NOEXTENSION(L)=\{u\in L \ | \ u$ no es prefijo propio de ninguna
+$b) \ NOEXTENSION(L)=\{u\in L \ | \ u$ no es prefijo propio de ninguna
 palabra de $L\}$ \\
 
   Si un estado es final pero leyendo más símbolos se puede llegar a
@@ -201,7 +203,7 @@ estados finales.
   Supongamos que $M=(Q,A,q_0,\delta,F)$ es un autómata finito
 determinista que reconoce a $L$. Construimos $M'=(Q,A,q_0,\delta,F')$
 donde
-  \[F'=\{q\in F \ | \ \nexists u \in A^*, \ \nexists f \in F :
+  \[F'=\{q\in F \ | \ \nexists u \in A^+, \ \nexists f \in F :
 (q,u)\vdash^* (f,\varepsilon)\}\]
 
 De esta forma, $M'$ sólo acepta palabra de $L$. Además, de toda
@@ -209,7 +211,105 @@ palabra $u$ aceptada por $M'$, sabemos que no existe otra palabra $v
 \neq \varepsilon$ tal que $uv \in L$ justo como queríamos. \\
 
   Resumiendo, hemos encontrado un autómata finito determinista que
-reconoce $NOEXTENSION(L)$, luego es regular. \\
+  reconoce $NOEXTENSION(L)$, luego es regular. \\
+
+  \textbf{Aclaración:} En ambos apartados no he tenido en cuenta que
+  la palabra vacía no es un prefijo propio. Procedo a arreglar ambas
+  pruebas:
+
+  En los autómatas finitos deterministas que he hallado, si la palabra
+  vacía está en $L$, se debe eliminar el estado inicial $q_0$ del
+  conjunto de estados finales y añadir una transición nula de $q_0$ a
+  otro nuevo estado final $r$. Ahora tengo autómatas no deterministas
+  con transiciones nulas que verdaderamente reconocen los lenguajes
+  $NOPREFIJO(L)$ y $NOEXTENSION(L)$, luego son regulares.
+\end{exercise}
+
+\newpage
+
+\begin{exercise}~ $L\subseteq A^*$ define una relación $\equiv$ en
+  $A^*$.
+  \[u\equiv v \text{ si y sólo si } \forall z\in A^* \text{ se tiene }
+    (uz\in L \Leftrightarrow vz \in L)\]
+
+  \begin{enumerate}[a)]
+  \item Probemos que $\equiv$ es una relación de equivalencia
+    \begin{enumerate}
+    \item[Reflexiva:]
+      $(uz\in L \Leftrightarrow uz \in L) \ \forall z\in A^*$, luego
+      $u\equiv u \ \forall u\in A^*$.
+    \item[Simétrica:]
+      $(uz\in L \Leftrightarrow vz \in L) \Leftrightarrow (vz\in L
+      \Leftrightarrow uz \in L)$, luego
+      $u\equiv v \Leftrightarrow v\equiv u$.
+    \item[Transitiva:] Si $(uz\in L \Leftrightarrow vz \in L)$ y
+      $(vz\in L \Leftrightarrow wz \in L)$ claramente tenemos \\
+      $(uz\in L \Leftrightarrow wz \in L)$, luego $u\equiv v$ y
+      $v\equiv w$ implica $u\equiv w$.      
+    \end{enumerate}
+
+  \item Calcularemos las clases de equivalencia de
+    $L=\{a^ib^i|i\geq 0\}$.
+
+    $C=$ Clase de las palabras que no son prefijo de ninguna palabra
+    de $L$:
+    \begin{itemize}
+    \item Palabras de la forma $A^*bA^*aA^*$.
+    \item Palabras de la forma $a^ib^j$ donde $j>i\geq 0$.
+    \end{itemize}
+    
+    $C_{ij}$ ($i \geq j \geq 0$) = Clase de equivalencia de la
+    palabra $a^ib^j$ (formada únicamente por dicha palabra).
+
+  \item Calcularemos las clases de equivalencia de
+    $L=\{a^ib^j|i,j\geq 0\}$.
+
+    $C=$ Clase de las palabras que no son prefijo de ninguna palabra
+    de $L$, son de la forma $A^*bA^*aA^*$.
+    
+    $C_a=$ Clase de equivalencia de las palabras de la forma $a^i$ con
+    $i\geq 0$.
+
+    $C_b=$ Clase de equivalencia de las palabras de la forma $a^ib^j$
+    con $i\geq 0, \ j>0$.
+
+  \item Probaré que $L$ es aceptado por un autómata finito
+    determinista si y sólo si el número de clases de equivalencia es
+    finito.
+
+    Si $L$ es aceptado por un autómata finito determinista, debe
+    existir un autómata minimal que lo acepte (obviamente finito), en
+    el apartado siguiente pruebo que palabras de distinta clase de
+    equivalencia llevan a estados distintos, luego el número de clases
+    de equivalencia debe ser finito.
+
+    Si el número de clases de equivalencia de $L$ es finito
+    ($C_0,\ldots,C_{n-1}$, podemos suponer $\varepsilon \in C_0$),
+    creamos un autómata que lo reconozca:
+    $M=(\{q_0,\ldots,q_{n-1}\},A,q_0,\delta,F)$
+    \begin{align*}
+      \delta(q_i,a)=&q_j \text{ donde $C_j$ es la clase de equivalencia de $u_ia$, siendo $u_i$ cualquier palabra de $C_i$}\\
+      F=&\{q_i \in Q | u \in C_i \implies u \in L\}
+    \end{align*}
+
+  \item La relación que existe entre el número de clases de
+    equivalencia y el autómata finito minimal que acepta $L$ es que el
+    número de clases de equivalencia es el número de estados del
+    autómata.
+
+    La idea es que si $u$ y $v$ son dos palabras de la misma clase de
+    equivalencia, $q_u=\delta(q_0,u)$ y $q_v=\delta(q_0,v)$ deben ser
+    el mismo estado, ya que $\forall z \in A^*$ tenemos que
+    $\delta(q_u,z) \in F \Leftrightarrow \delta(q_v,z) \in F$ y si
+    $q_u \neq q_v$ se podrían unificar, contradiciendo así la
+    propiedad de ser minimal.
+
+    Recíprocamente, si $u$ y $v$ no pertenecen a la misma clase de
+    equivalencia $q_u$ y $q_v$ deberán ser diferentes, ya que existe
+    un $z\in A^*$ cumpliendo $\delta(q_u,z) \in F$ y
+    $\delta(q_v,z) \notin F$ o viceversa.
+  \end{enumerate}
+  
 \end{exercise}
 
 \end{document}
