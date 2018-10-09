@@ -217,15 +217,24 @@ palabra $u$ aceptada por $M'$, sabemos que no existe otra palabra $v
   la palabra vacía no es un prefijo propio. Procedo a arreglar ambas
   pruebas:
 
-  En los autómatas finitos deterministas que he hallado, si la palabra
+  $a)$ En el autómata finito determinista que he hallado, si
+  $\varepsilon \in L$, hacemos que $\delta'(q_0,a)=\delta(q_0,a)$
+  aunque se trate de un estado final. Creamos un nuevo estado final
+  $q_0'$, para el que definimos $\delta'$ como en el resto de estados
+  finales y modificamos $\delta'$ para que que si $\delta(q,a)=q_0$,
+  entonces $\delta(q,a)=q_0'$.
+
+  El autómata sigue siendo finito determinista y ahora sí reconoce a
+  $NOPREFIJO(L)$. \\
+
+  $b)$ En el autómatafinito determinista que he hallado, si la palabra
   vacía está en $L$, se debe eliminar el estado inicial $q_0$ del
   conjunto de estados finales y añadir una transición nula de $q_0$ a
-  otro nuevo estado final $r$. Ahora tengo autómatas no deterministas
-  con transiciones nulas que verdaderamente reconocen los lenguajes
-  $NOPREFIJO(L)$ y $NOEXTENSION(L)$, luego son regulares.
+  otro nuevo estado final $r$. Ahora tengo un autómata no determinista
+  con transiciones nulas que verdaderamente reconoce $NOEXTENSION(L)$,
+  luego es regular.
 \end{exercise}
-
-\newpage
+~
 
 \begin{exercise}~ $L\subseteq A^*$ define una relación $\equiv$ en
   $A^*$.
@@ -291,6 +300,28 @@ palabra $u$ aceptada por $M'$, sabemos que no existe otra palabra $v
       \delta(q_i,a)=&q_j \text{ donde $C_j$ es la clase de equivalencia de $u_ia$, siendo $u_i$ cualquier palabra de $C_i$}\\
       F=&\{q_i \in Q | u \in C_i \implies u \in L\}
     \end{align*}
+
+    Tanto $\delta$ como $F$ están bien definidos, ya que el
+    representante de la clase es arbitrario. En la definición de $F$,
+    si $v$ es otra palabra de $C_i$,
+    $u\varepsilon \in L \Rightarrow v = v\varepsilon \in L$.
+
+    En la definición de $\delta$, si $v_i$ es una palabra de la misma
+    clase de equivalencia $C_i$, la clase de $v_ia$ será la misma que
+    la de $u_ia$. Demostración: dado $z \in A^*$ cualquiera
+    \[(v_ia)z \in L \Leftrightarrow v_i(az) \in L \Leftrightarrow
+      u_i(az) \in L \Leftrightarrow (u_ia)z \in L\]
+
+    Probemos que $M$ efectivamente reconoce el lenguaje $L$:
+
+    Si $u \in A^*$ es aceptada por $M$, la clase de $u$ (supondremos
+    $C_i$ se corresponderá con un estado final de $M$ ($q_i$). Pero
+    los estados finales son los que cumplen que cualquier
+    representante pertenece al lenguaje, luego $u \in L$.
+
+    Si $u \in L$, $\delta(q_0,u)$ corresponderá a una clase de
+    equivalencia asociada a un estado final (ya que tiene un
+    representante que pertenece al lenguaje), luego $M$ aceptará $u$.
 
   \item La relación que existe entre el número de clases de
     equivalencia y el autómata finito minimal que acepta $L$ es que el
