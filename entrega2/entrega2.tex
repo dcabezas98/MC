@@ -120,8 +120,10 @@ usaremos el algoritmo visto en clase (sólo mostraré un par de iteraciones)
 \begin{align*}
   r_{11}^3&+r_{13}^3 \\
   r_{11}^2+r_{13}^2(r_{33}^2)^*r_{31}^2&+r_{13}^2+r_{13}^2(r_{33}^2)^*r_{33}^2 \\
-  \varepsilon+(a+b)a^*b(a(a+b)a^*b)^*a&+(a+b)a^*b(a(a+b)a^*b)^* \\
-  \varepsilon+(a+b)a^*b(a(a&+b)a^*b)^*(a+\varepsilon)
+  \varepsilon+(a+b)a^*b(a(a+b)a^*b+ba^*b)^*a&+(a+b)a^*b+(a+b)a^*b(a(a+b)a^*b+ba^*b)^+ \\
+  \varepsilon+(a+b)a^*b\big(\varepsilon+(a(a+b)a^*b&+ba^*b)^*a+(a(a+b)a^*b+ba^*b)^+\big) \\
+  \varepsilon+(a+b)a^*b\big((a(a+b)a^*b&+ba^*b)^*a+(a(a+b)a^*b+ba^*b)^*\big) \\
+  \varepsilon+(a+b)a^*b\big((a(a+b)a^*b&+ba^*b)^*(a+\varepsilon)\big)
 \end{align*}
 \end{exercise}
 
@@ -145,6 +147,8 @@ $B_2=$ palabras sobre $\{a\}^*$ con número par de $a$'s es reconocido por
   \centering
   \subfigure{\includegraphics[width=50mm]{23_b2}}
 \end{figure}
+
+\newpage
 
 $B_3$ por 
 \begin{figure}[H]
@@ -173,6 +177,7 @@ $a_i=a \ \forall i$.
   propios que pertenecen al lenguaje, podemos conseguir esto con tan
   sólo hacer inaccesibles algunos de los estados finales del autómata.
 
+  Primero lo haré para $\varepsilon \notin L$.
   Supongamos que $M=(Q,A,q_0,\delta,F)$ es un autómata finito
   determinista que reconoce a $L$. Construimos
   $M'=(Q\cup\{p\},A,q_0,\delta',F)$ y definimos $\delta'$ de la
@@ -187,10 +192,17 @@ $a_i=a \ \forall i$.
   hecho acabaría ciclando en $p$), por lo que siempre hemos aplicado
   la definición del resto de casos, esto significa que ningún prefijo
   propio de $u$ es aceptado por $M'$ y que todas las palabras
-aceptadas por $M'$ son de $L$. \\
+  aceptadas por $M'$ son de $L$. \\
+
+  En el autómata finito determinista que he hallado, si
+  $\varepsilon \in L$, hacemos que $\delta'(q_0,a)=\delta(q_0,a)$
+  aunque se trate de un estado final. Creamos un nuevo estado final
+  $q_0'$, para el que definimos $\delta'$ como en el resto de estados
+  finales y modificamos $\delta'$ para que que si $\delta(q,a)=q_0$,
+  entonces $\delta'(q,a)=q_0'$.
 
   Resumiendo, hemos encontrado un autómata finito determinista que
-reconoce $NOPREFIJO(L)$, luego es regular. \\
+  reconoce $NOPREFIJO(L)$, luego es regular. \\
 
 $b) \ NOEXTENSION(L)=\{u\in L \ | \ u$ no es prefijo propio de ninguna
 palabra de $L\}$ \\
@@ -200,6 +212,7 @@ otro (o el mismo) estado final, se deben eliminar del lenguaje las
 palabras que lleven a ese estado. Esto lo conseguimos eliminando
 estados finales.
 
+Primero lo haré para $\varepsilon \notin L$.
   Supongamos que $M=(Q,A,q_0,\delta,F)$ es un autómata finito
 determinista que reconoce a $L$. Construimos $M'=(Q,A,q_0,\delta,F')$
 donde
@@ -211,28 +224,13 @@ palabra $u$ aceptada por $M'$, sabemos que no existe otra palabra $v
 \neq \varepsilon$ tal que $uv \in L$ justo como queríamos. \\
 
   Resumiendo, hemos encontrado un autómata finito determinista que
-  reconoce $NOEXTENSION(L)$, luego es regular. \\
+reconoce $NOEXTENSION(L)$, luego es regular. \\
 
-  \textbf{Aclaración:} En ambos apartados no he tenido en cuenta que
-  la palabra vacía no es un prefijo propio. Procedo a arreglar ambas
-  pruebas:
-
-  $a)$ En el autómata finito determinista que he hallado, si
-  $\varepsilon \in L$, hacemos que $\delta'(q_0,a)=\delta(q_0,a)$
-  aunque se trate de un estado final. Creamos un nuevo estado final
-  $q_0'$, para el que definimos $\delta'$ como en el resto de estados
-  finales y modificamos $\delta'$ para que que si $\delta(q,a)=q_0$,
-  entonces $\delta(q,a)=q_0'$.
-
-  El autómata sigue siendo finito determinista y ahora sí reconoce a
-  $NOPREFIJO(L)$. \\
-
-  $b)$ En el autómatafinito determinista que he hallado, si la palabra
-  vacía está en $L$, se debe eliminar el estado inicial $q_0$ del
-  conjunto de estados finales y añadir una transición nula de $q_0$ a
-  otro nuevo estado final $r$. Ahora tengo un autómata no determinista
-  con transiciones nulas que verdaderamente reconoce $NOEXTENSION(L)$,
-  luego es regular.
+En el autómata finito determinista que he hallado, si la palabra vacía
+está en $L$, se debe eliminar el estado inicial $q_0$ del conjunto de
+estados finales y añadir una transición nula de $q_0$ a otro nuevo
+estado final $r$. Ahora tengo un autómata finito con transiciones
+nulas que reconoce $NOEXTENSION(L)$, luego es regular.
 \end{exercise}
 ~
 
