@@ -178,7 +178,33 @@
   \[\{w \ | \ w=a_1b_1a_2b_2\ldots a_kb_k \text{ donde } a_1\ldots a_k
     \in L_1, \ b_1\ldots b_k \in L_2, \ a_i,b_i \in A\}\] Demostrar
   que si $L_1$ y $L_2$ son regulares, su mezcla perfecta lo es. \\
-  
+
+  Consideraremos $\equiv_1$ y $\equiv_2$ las clases de equivalencia en
+  $A^*$ determinadas por $L_1$ y $L_2$ respectivamente. Si
+  $u,v \in A^*$:
+  \[u\equiv_1v \text{ cuando } \forall z \in A^*, \ uz \in L_1 \Leftrightarrow vz \in L_1\]
+  \[u\equiv_2v \text{ cuando } \forall z \in A^*, \ uz \in L_2 \Leftrightarrow vz \in L_2\]
+
+  Consideremos también los autómatas minimales que reconocen a $L_1$ y
+  a $L_2$, los conjuntos de estados serán los conjuntos cocientes que
+  definen estas relaciones.
+
+  \[M_1=(Q_1=\frac{A^*}{\equiv_1},A,[\varepsilon]_1,\delta_1,F_1=\{[u]_1: u \in L_1\})\]  
+  \[M_2=(Q_2=\frac{A^*}{\equiv_2},A,[\varepsilon]_2,\delta_2,F_2=\{[u]_2: u \in L_2\})\]
+  donde
+  \[\delta_1([u]_1,a)=[ua]_1 \quad \forall u \in A^*, a \in A\]
+  \[\delta_2([u]_2,a)=[ua]_2 \quad \forall u \in A^*, a \in A\]
+
+  Definimos el autómata
+  \[M=(Q_1\times Q_2,A,([\varepsilon]_1,[\varepsilon]_2),\delta,F_1\times F_2)\]
+  donde
+  \[\delta(([u],[v]),a)=
+  \begin{cases}
+    ([ua],[v]) \text{ si } |u| = |v| \\
+    ([u],[va]) \text{ si } |u| = |v|+1
+  \end{cases}
+  \]
+
 \end{exercise}
 
 ~
