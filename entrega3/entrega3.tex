@@ -196,18 +196,31 @@
   \[\delta_2([u]_2,a)=[ua]_2 \quad \forall u \in A^*, a \in A\]
 
   Definimos el autómata
-  \[M=(Q_1\times Q_2,A,([\varepsilon]_1,[\varepsilon]_2),\delta,F_1\times F_2)\]
+  \[M=(Q_1\times Q_2\times \{0,1\},A,([\varepsilon]_1,[\varepsilon]_2,0),\delta,F_1\times F_2\times \{0\})\]
   donde
-  \[\delta(([u],[v]),a)=
-  \begin{cases}
-    ([ua],[v]) \text{ si } |u| = |v| \\
-    ([u],[va]) \text{ si } |u| = |v|+1
-  \end{cases}
-  \]
+  \[\delta(([u]_1,[v]_2,0),a)=(\delta_1([u]_1,a),[v]_2,0)=([ua]_1,[v]_2,1) \quad \forall u,v \in A^*, a \in A\]
+  \[\delta(([u]_1,[v]_2,1),a)=([u]_1,\delta_2([v]_2,a),0)=([u]_1,[va]_2,0) \quad \forall u,v \in A^*, a \in A\]
 
+  \vspace{3mm}
+
+  Una palabra $w=a_1a_2\ldots _{2k} \in A^*$ lleva al estado
+  $([u]_1,[v]_2,0)$ donde $u=a_1a_3\ldots a_{2k-1}$ y
+  $v=a_2a_4\ldots a_{2k}$, por lo que
+  $w \in L(M) \Leftrightarrow ([u]_1,[v]_2,0) \in F_1\times F_2\times
+  \{0\} \Leftrightarrow u \in L_1$ y $v \in L_2$. Luego $M$ acepta una
+  palabra de longitud par si y sólo si pertenece a la mezcla perfecta
+  de $L_1$ y $L_2$.
+  
+  Una palabra de longitud impar llevará a un estado de
+  $Q_1\times Q_2 \times \{1\}$, luego $M$ no aceptará palabras de
+  longitud impar, puesto que estas nunca estarán en la mezcla perfecta
+  de $L_1$ y $L_2$. \\
+
+  Resumiendo, hemos hallado un AFD que reconoce la mezcla perfecta de
+  $L_1$ y $L_2$, luego es regular.
 \end{exercise}
 
-~
+\newpage
 
 \begin{exercise}~ Minimizar el autómata. \\
 \vspace{-7mm}
