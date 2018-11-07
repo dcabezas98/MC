@@ -1,0 +1,7 @@
+S A B
+abc
+S -> cA
+A -> abcB
+A -> ac
+B -> bbcB
+B -> -
