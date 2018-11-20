@@ -1,0 +1,135 @@
+\documentclass[12pt,spanish]{article}
+% aprovechamiento de la p\'agina -- fill an A4 (210mm x 297mm) page
+% Note: 1 inch = 25.4 mm = 72.27 pt
+% 1 pt = 3.5 mm (approx)
+
+% vertical page layout -- one inch margin top and bottom
+\topmargin      -10 mm   % top margin less 1 inch
+\headheight       0 mm   % height of box containing the head
+\headsep          0 mm   % space between the head and the body of the page
+\textheight     255 mm   % the height of text on the page
+\footskip         7 mm   % distance from bottom of body to bottom of foot
+
+% horizontal page layout -- one inch margin each side
+\oddsidemargin    0 mm     % inner margin less one inch on odd pages
+\evensidemargin   0 mm     % inner margin less one inch on even pages
+\textwidth      159 mm     % normal width of text on page
+
+\setlength{\parindent}{0pt}
+
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+\usepackage[doument]{ragged2e}
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,mathtools}
+\usepackage{amsfonts,amssymb,latexsym}
+\usepackage{enumerate}
+\usepackage{subfigure, float, graphicx, caption}
+\captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{labelformat=empty}
+\definecolor{RojoAnayelRey}{rgb}{1,.25,.25}
+\usepackage[bookmarks=true,
+            bookmarksnumbered=false, % true means bookmarks in 
+                                     % left window are numbered         
+            bookmarksopen=false,     % true means only level 1
+                                     % are displayed.
+            colorlinks=true,
+            linkcolor=webred]{hyperref}
+\definecolor{webgreen}{rgb}{0, 0.5, 0} % less intense green
+\definecolor{webblue}{rgb}{0, 0, 0.5}  % less intense blue
+\definecolor{webred}{rgb}{0.5, 0, 0}   % less intense red
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{MistyRose}{RGB}{255,228,225}
+\definecolor{LightCyan}{RGB}{224,255,255}
+
+% \usepackage{beton}
+% \usepackage[T1]{fontenc}
+
+% Theorem environments
+
+%% \theoremstyle{plain} %% This is the default
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposici\'on}
+%\newtheorem{ax}{Axioma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{algorithm}{\textrm{\bf Algoritmo}}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{exercise}{\textbf{Ejercicio}}%[section]
+%\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{solution}{\begin{proof}[Solución]}{\end{proof}}
+\newtheorem*{notation}{Notaci\'on}
+
+%\numberwithin{equation}{section}
+
+%\newcommand{\regla}[2]{
+%\begin{array}{c}
+%#1\\
+%\hline
+%#2\\
+%\end{array}
+%}
+\begin{document}
+
+\title{Modelos de Computación: \\ Relación de problemas 4}
+\author{David Cabezas Berrido}
+\date{\vspace{-5mm}}
+\maketitle
+
+\setcounter{exercise}{13}
+
+\begin{exercise}~ Dar gramáticas idependientes del contexto que
+  generen los siguientes lenguajes sobre el alfabeto $A=\{0,1\}$.
+
+  \begin{enumerate}[a)]
+  \item $L_1$: palabras que si empiezan por 0, tienen el mismo número
+    de 0s que de 1s.
+
+    \[G_1=(\{S,D,B,C\},A,P,S)\]
+    Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow 0D|1B|\varepsilon, \\
+      D&\rightarrow C1C, \\
+      C&\rightarrow C0C1C|C1C0C|\varepsilon, \\
+      B&\rightarrow 0B|1B|\varepsilon\}
+    \end{align*}
+    
+  \item $L_2$: palabras que si terminan por 1, tienen un número de 1s
+    mayor o igual que el número de 0s.
+
+    \[G_2=(\{S,X,Y,Z\},A,P,S)\]
+    Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow X1|Y0|\varepsilon, \\
+      X&\rightarrow Z0Z|Z, \\
+      Z&\rightarrow Z1Z|Z0Z1Z|Z1Z0Z|\varepsilon, \\
+      Y&\rightarrow 0Y|1Y|\varepsilon\}
+    \end{align*}
+
+  \item $L_1\cap L_2$.
+    \[G_2=(\{S,B,C,D,X,Y,Z\},A,P,S)\]
+    Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow 0C|1X|\varepsilon, \\
+      C&\rightarrow D1D, \\
+      D&\rightarrow D0D1D|D1D0D|\varepsilon, \\
+      X&\rightarrow Y1|B0, \\
+      Y&\rightarrow Z0Z0Z|Z0Z|Z, \\
+      Z&\rightarrow Z1Z|Z0Z1Z|Z1Z0Z|\varepsilon, \\
+      B&\rightarrow 0B|1B|\varepsilon\}
+    \end{align*}
+  \end{enumerate}
+  
+\end{exercise}
+
+\end{document}
