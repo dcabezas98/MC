@@ -117,16 +117,153 @@
     \end{align*}
 
   \item $L_1\cap L_2$.
-    \[G_2=(\{S,B,C,D,X,Y,Z\},A,P,S)\]
+    \[G_3=(\{S,B,C,D,X,Y,Z\},A,P,S)\]
     Donde \vspace{-5mm}
     \begin{align*}
       P=\{S&\rightarrow 0C|1X|\varepsilon, \\
       C&\rightarrow D1D, \\
       D&\rightarrow D0D1D|D1D0D|\varepsilon, \\
-      X&\rightarrow Y1|B0, \\
+      X&\rightarrow Y1|B0|\varepsilon, \\
       Y&\rightarrow Z0Z0Z|Z0Z|Z, \\
       Z&\rightarrow Z1Z|Z0Z1Z|Z1Z0Z|\varepsilon, \\
       B&\rightarrow 0B|1B|\varepsilon\}
+    \end{align*}
+  \end{enumerate}
+  
+\end{exercise}
+
+\newpage
+
+\setcounter{exercise}{15}
+
+\begin{exercise}~ Una gramática independiente del contexto
+  generalizada es una gramática en la que las producciones son de la
+  forma $A\rightarrow \textbf{r}$ donde $\textbf{r}$ es una expresión
+  regular de variables y símbolos terminales. Demostrar que un
+  lenguaje es independiente del contexto si y sólo si se puede generar
+  por una gramática generalizada. \\
+
+  ($\Longrightarrow$) Si $L$ es un lenguaje independiente del contexto,
+  existe una gramática independiente del contexto que lo genera.
+  \[G=(V,T,P,S)\] donde todas las reglas son de la forma
+  $A\rightarrow \alpha$ con $\alpha \in (V \cup T)^*$. Estos $\alpha$
+  son expresiones regulares (concatenaciones de variables y símbolos),
+  luego $G$ es una gramática independiente del contexto generalizada. \\
+
+  ($\Longleftarrow$) Sea $L$ es un lenguaje generado por una gramática
+  independiente del contexto generalizada.
+  \[G=(V,T,P,S)\] donde todas las reglas son de la forma
+  $A\rightarrow \textbf{r}$ con $\textbf{r}$ una expresión regular de
+  variables y símbolos terminales. Para probar que existe una
+  gramática de tipo 2 que genera $L$, debo probar que cada regla
+  $A\rightarrow \textbf{r}$ puede sustituirse por un número finito de
+  reglas de producción de la forma $A\rightarrow \alpha$ con
+  $\alpha \in (V\cup T)^*$. Haremos el mismo razonamiento que el que
+  se hizo en teoría para probar que el lenguaje asociado a una
+  expresión regular puede expresarse con un autómata, construir el
+  conjunto finito de reglas de producción de forma recursiva.
+
+  \begin{itemize}
+  \item $A\rightarrow\emptyset$ puede eliminarse.
+  \item $A\rightarrow\alpha$ \quad ($\alpha \in (V \cup T)^*$) ya está en la
+    forma deseada.
+  \item $A\rightarrow (r_1+r_2)$ puede sustituirse por dos reglas:
+    $A\rightarrow r_1$, $A\rightarrow r_2$.
+  \item $A\rightarrow (r_1r_2)$ puede sustituirse por las reglas:
+    $A\rightarrow BC$, $B\rightarrow r_1$, $C\rightarrow r_2$.
+  \item $A\rightarrow r^*$ puede sustituirse por:
+    $B\rightarrow AB|\varepsilon$, $A\rightarrow r$.
+  \end{itemize}
+
+  Hemos probado que cada regla $A\rightarrow \textbf{r}$ puede
+  sustituirse por un número finito de reglas $A\rightarrow
+  \alpha$. Luego toda gramática libre de contexto generalizada tiene
+  una gramática libre de contexto equivalente.
+\end{exercise}
+
+~
+
+\begin{exercise}~ Demostrar que los siguientes lenguajes son
+  independientes del contexto:
+
+  \begin{enumerate}[a)]
+  \item $L_1=\{u \# w|u^{-1} \text{ es una subcadena de $w$; } u,w \in \{0,1\}^*\}$
+    
+    Es generado por la gramática libre de
+    contexto \[G=(\{S,A,B\},\{0,1,\#\},P,S)\] Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow S0|S1|A, \\
+      A&\rightarrow 0A0|1A1|B, \\
+      B&\rightarrow B0|B1|\#\}
+    \end{align*}
+
+  \item $L_2=\{u_1\# u_2\#\ldots\# u_k \ |\ k\geq 1, \text{ cada } u_i \in \{0,1\}^*, \text{ y para algún } i \text{ y } j,\ u_i = u_j^{-1}\}$
+
+    Es generado por la gramática libre de
+    contexto \[G=(\{S,A,C\},\{0,1,\#\},P,S)\] Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow \varepsilon|A|C\# A\# C|A\# C|C\# A, \\
+      A&\rightarrow 0A0|1A1|\# C\#|\#, \\
+      C&\rightarrow 0C|1C|C\# C| \varepsilon\}
+    \end{align*}
+  \end{enumerate}
+\end{exercise}
+
+\setcounter{exercise}{18}
+
+~
+
+\begin{exercise}~ Probar que
+  $L=\{u\# v \ |\ u,v \in \{0,1\}^*,\ u\neq v\}$ es un lenguaje libre
+  de contexto. \\
+
+  Debo encontrar una gramática libre de contexto que lo genere.
+  \[G=(\{S,A,X,Y,C,H,T,H_0,H_1,K\},\{0,1,\#\},P,S)\]
+  \vspace{-10mm}
+  \begin{align*}
+    P=\{S&\rightarrow A|C, \\
+    A&\rightarrow KAK|XK|KY, \hspace{10mm}   (|u|\neq |v|) \\
+    X&\rightarrow XK|\#,     \hspace{24.9mm} (|u| < |v|) \\
+    Y&\rightarrow KY|\#,     \hspace{25.4mm} (|u| > |v|) \\
+    C&\rightarrow HT,        \hspace{30.6mm} (|u|=|v|) \\
+    T&\rightarrow KT|\varepsilon \\
+    H&\rightarrow H_00|H_11 \\
+    H_0&\rightarrow KH_0K|1T\# \\
+    H_1&\rightarrow KH_1K|0T\# \\
+    K&\rightarrow 0|1\}
+  \end{align*}
+\end{exercise}
+
+\setcounter{exercise}{20}
+
+~
+
+\begin{exercise}~ Dar gramáticas independientes del contexto no
+  ambiguas para los siguientes lenguajes sobre el alfabeto $\{0,1\}$:
+
+  \begin{enumerate}[a)]
+  \item Palabras $w$ tales que en todo prefijo de $w$, el número de 0s
+    es mayor o igual que el de 1s.
+    \[G=(\{S,X,Y\},\{0,1\},P,S)\]
+    Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow S0|SX|\varepsilon \\
+      X&\rightarrow Y1 \\
+      Y&\rightarrow YY1|0\}
+    \end{align*}
+
+  \item Palabras $w$ en las que el número de 0s es mayor o igual que
+    el número de 1s.
+    \[G=(\{S,A,B,C,D,H,T\},\{0,1\},P,S)\]
+    Donde \vspace{-5mm}
+    \begin{align*}
+      P=\{S&\rightarrow H|T \\
+      H&\rightarrow AH|CH|\varepsilon \\
+      T&\rightarrow 0S|CT \\
+      A&\rightarrow 0B \\
+      B&\rightarrow 0BB|1 \\
+      C&\rightarrow 1D \\
+      D&\rightarrow 1DD|0 \}
     \end{align*}
   \end{enumerate}
   
