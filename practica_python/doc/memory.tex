@@ -1,0 +1,66 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
+
+
+
+\setlength{\parindent}{0cm}
+
+\title{
+Implementación de una clase para gramáticas regulares \\
+\large Doble Grado Ingeniería Informática y Matemáticas \\ Modelos de computación}
+
+\author{
+David Cabezas Berrido\\
+Francisco Miguel Castro Macías
+}
+
+\date{08/11/2018}
+
+\begin{document}
+
+\maketitle
+
+Esta práctica consiste en, a partir de un código en python, implementar una clase para representar gramáticas regulares (tipo 3). Se detalla a continuación el formato que deben presentar estas gramáticas para la correcta lectura y escritura, así como la forma en que se han implementado las diversas funciones que se pedían.\\
+
+\section{Formato}
+Según nos dice el guión de la práctica, las gramáticas de tipo 3 se representarán así:
+\begin{itemize}
+\item Una línea con las variables. La primera de ellas será la variable inicial.
+\item Una línea con los símbolos terminales.
+\item Una línea por cada producción. Cada producción será de la forma 'A \texttt{->} $\alpha$'.
+\end{itemize}
+
+\section{Clase y funciones implementadas}
+Se ha creado la clase \texttt{RegularGrammar}, que tiene como atributos:
+
+\begin{itemize}
+\item \texttt{variables}: las variables que hay en la gramática.
+\item \texttt{alphabet}: el alfabeto.
+\item \texttt{productions}: un map en el que se guardan las producciones. Por cada variable almacenamos todas las producciones que salen de ella junto a la etiqueta.
+\begin{gather*}
+\texttt{`source': [`labeldestiny', `labeldestiny', ...]}\\
+\texttt{source ->\thinspace \thinspace labeldestiny}
+\end{gather*}
+\end{itemize}
+En esta clase se han creado las siguientes funciones: 
+\begin{itemize}
+\item \texttt{readFromFile(d):} si \texttt{d} es un fichero que contiene una gramática, la lee.
+\item \texttt{writeToFile(d):} escribe la gramática en un fichero con el formato especificado. 
+\item \texttt{checkLinearIzdaDcha():} comprueba si la gramática que contiene es linear por la izquierda o linear por la derecha. Devuelve un par \texttt{(i, d)} donde \texttt{i=true} si es linear por la izquierda y \texttt{i=false} en otro caso. Análogo para \texttt{d}.
+\item \texttt{checkRegular():} devuelve \texttt{true} si la gramática es regular y \texttt{false} en otro caso.
+\item \texttt{toAFND():} genera un objeto de la clase \texttt{afd}, en concreto un autómata finito no determinista con transiciones nulas, que acepta el lenguaje representado por la gramática. Como precondición se impone que la gramática sea linear por la derecha.
+\item \texttt{fromAFND(aut):} construye la gramática linear por la derecha que genera el lenguaje aceptado por el autómada \texttt{aut}. 
+\end{itemize}
+
+Debemos señalar que somos conscientes de que también se puede pasar de gramática a autómata aun si la gramática es linear por la izquierda. Sin embargo, esto conlleva invertir la gramática, obtener el autómata, invertir el autómata y obtener la gramática de este último autómata.
+
+\section{Test y ficheros de prueba}
+Se proporciona por último una serie de ficheros de prueba y una función \texttt{testGrammar()} donde se leen las gramáticas de estos ficheros y se ejecutan las funciones implementadas. 
+\end{document}
