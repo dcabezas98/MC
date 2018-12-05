@@ -1,6 +1,12 @@
 %{
+// David Cabezas Berrido
+
 /*
 Programa para cambiar las fechas de un texto de formato, recibe un texto y lo imprime tal cual pero convirtiendo las fechas al formato especificado
+*/
+
+/*
+También elimina comentarios en c, c++ y java
 */
 
 #include<stdio.h>
@@ -35,8 +41,9 @@ const char* mes_ntoeng(char* m);
 const char* mes_engton(char* m);
 
 void procesar_y_mostrar(char* cadena, int longitud, int formato_entrada);
-
 %}
+
+comentario	(\/\/.*)|(\/\*([^\*]|\*+[^\*\/])*\*+\/)
 
 dia			[1-3]?[0-9]
 mes			1?[0-9]
@@ -53,11 +60,12 @@ formato5	{mes_ingles}\ {dia},\ {anio}
 
 %%
 
-{formato1}	{procesar_y_mostrar(yytext, yyleng, 1);}
-{formato2}	{procesar_y_mostrar(yytext, yyleng, 2);}
-{formato3}	{procesar_y_mostrar(yytext, yyleng, 3);}
-{formato4}	{procesar_y_mostrar(yytext, yyleng, 4);}
-{formato5}	{procesar_y_mostrar(yytext, yyleng, 5);}
+{comentario}	{}
+{formato1}		{procesar_y_mostrar(yytext, yyleng, 1);}
+{formato2}		{procesar_y_mostrar(yytext, yyleng, 2);}
+{formato3}		{procesar_y_mostrar(yytext, yyleng, 3);}
+{formato4}		{procesar_y_mostrar(yytext, yyleng, 4);}
+{formato5}		{procesar_y_mostrar(yytext, yyleng, 5);}
 
 %%
 

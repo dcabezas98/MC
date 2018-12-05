@@ -1,0 +1,17 @@
+\documentclass[tikz]{standalone}
+\usetikzlibrary{automata,positioning}
+\begin{document}
+
+\begin{tikzpicture}[>=stealth,node distance=3cm,on grid,auto, thick, initial text=] 
+  \node[state, initial] (start) {\tiny Start};
+  \node[state] (care) [right=of start] {\tiny Care};
+  \node[state, accepting] (end) [right=of care] {\tiny End};
+  \node[left=12mm of start] {/$*$};
+  
+  \path[->] (start) edge [loop above] node {[\textasciicircum$*$]} (start)
+  (start) edge [bend left] node {$*$} (care)
+  (care) edge [loop above] node {$*$} (care)
+  (care) edge [bend left] node {[\textasciicircum$*$/]} (start)
+  (care) edge node {/} (end);
+\end{tikzpicture}
+\end{document}

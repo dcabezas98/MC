@@ -1,0 +1,13 @@
+\documentclass[tikz]{standalone}
+\usetikzlibrary{automata,positioning}
+\begin{document}
+
+\begin{tikzpicture}[>=stealth,node distance=3cm,on grid,auto, thick, initial text=] 
+  \node[state, initial] (start) {\tiny Start};
+  \node[state, accepting] (end) [right=of start] {\tiny End};
+  \node[left=12mm of start] {/$*$};
+  
+  \path[->] (start) edge [loop above] node {[\textasciicircum$*$]$|*^+$[\textasciicircum$*$/]} (start)
+  (start) edge node {$*^+/$} (end);
+\end{tikzpicture}
+\end{document}

@@ -2,6 +2,10 @@ El 5 de julio de 1996 nació la oveja dolly, aunque su nacimiento no
 fue anunciado hasta el 22/2/1997. La famosa ovejita murió el
 14-2-2003.
 
+/*
+Esto no debería de aparecer
+*/
+
 Hostilities began on April 12, 1861, when Confederate forces fired
 upon Fort Sumter.
 
@@ -9,9 +13,13 @@ The dates for the beginning of war in the Pacific include the start of
 the Second Sino-Japanese War on 7 July 1937, or even the
 Japanese invasion of Manchuria on 19 September 1931.
 
+/***********************************************
+	Esto tampoco
+************************************************/
+
 6/10/1978
 6-10-1978
-6 de octubre de 1978
+6 de octubre de 1978	// Ni esto
 6 October 1978
 October 6, 1978
 
@@ -21,13 +29,15 @@ October 6, 1978
 15 September 1475
 September 15, 1475
 
+// Ni esto otro
+
 11/3/516
 11-3-516
 11 de marzo de 516
 11 March 516
 March 11, 516
 
-7/5/998
+7/5/998 /* Ni siquiera esto **/
 7-5-998
 7 de mayo de 998
 7 May 998
