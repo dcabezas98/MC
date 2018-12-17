@@ -1,0 +1,396 @@
+\documentclass[12pt,spanish]{article}
+\pagenumbering{gobble}
+% aprovechamiento de la p\'agina -- fill an A4 (210mm x 297mm) page
+% Note: 1 inch = 25.4 mm = 72.27 pt
+% 1 pt = 3.5 mm (approx)
+
+% vertical page layout -- one inch margin top and bottom
+\topmargin      -15 mm   % top margin less 1 inch
+\headheight       0 mm   % height of box containing the head
+\headsep          0 mm   % space between the head and the body of the page
+\textheight     255 mm   % the height of text on the page
+\footskip         7 mm   % distance from bottom of body to bottom of foot
+
+% horizontal page layout -- one inch margin each side
+\oddsidemargin    0 mm     % inner margin less one inch on odd pages
+\evensidemargin   0 mm     % inner margin less one inch on even pages
+\textwidth      159 mm     % normal width of text on page
+
+\setlength{\parindent}{0pt}
+
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+\usepackage[doument]{ragged2e}
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,mathtools}
+\usepackage{amsfonts,amssymb,latexsym}
+\usepackage{enumerate}
+\usepackage{subfigure, float, graphicx, caption}
+\captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{labelformat=empty}
+\definecolor{RojoAnayelRey}{rgb}{1,.25,.25}
+\usepackage[bookmarks=true,
+            bookmarksnumbered=false, % true means bookmarks in 
+                                     % left window are numbered         
+            bookmarksopen=false,     % true means only level 1
+                                     % are displayed.
+            colorlinks=true,
+            linkcolor=webred]{hyperref}
+\definecolor{webgreen}{rgb}{0, 0.5, 0} % less intense green
+\definecolor{webblue}{rgb}{0, 0, 0.5}  % less intense blue
+\definecolor{webred}{rgb}{0.5, 0, 0}   % less intense red
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{MistyRose}{RGB}{255,228,225}
+\definecolor{LightCyan}{RGB}{224,255,255}
+
+\usepackage{multicol}
+% \usepackage{beton}
+% \usepackage[T1]{fontenc}
+
+% Theorem environments
+
+%% \theoremstyle{plain} %% This is the default
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposici\'on}
+%\newtheorem{ax}{Axioma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{algorithm}{\textrm{\bf Algoritmo}}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{exercise}{\textbf{Ejercicio}}%[section]
+%\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{solution}{\begin{proof}[Solución]}{\end{proof}}
+\newtheorem*{notation}{Notaci\'on}
+
+%\numberwithin{equation}{section}
+
+%\newcommand{\regla}[2]{
+%\begin{array}{c}
+%#1\\
+%\hline
+%#2\\
+%\end{array}
+%}
+\begin{document}
+
+\title{\vspace{-10mm} Modelos de Computación: \\ Relación de problemas
+  6} \author{David Cabezas Berrido} \date{\vspace{-5mm}}
+\maketitle
+
+\setcounter{exercise}{12}
+
+\begin{exercise}~ Encuentra una gramática libre de contexto en forma
+  normal de Chomsky que genere siguiente lenguaje:
+  \[L=\{ucv\ : \ u,v \in \{0,1\}^+ \text{ y nº subcadenas `01' en u =
+      nº subcadenas `10' en v}\}\]
+  Comprueba con el algoritmo CYK si la cadena $010c101$ pertenece al
+  lenguaje generado por la gramática.
+  
+  \vspace{-7mm}
+
+  \begin{multicols}{3}
+
+    \begin{align*}
+      S&\rightarrow XcY \\
+      S&\rightarrow AHB \\
+      H&\rightarrow 01ATB10 \\
+      T&\rightarrow H \\
+      T&\rightarrow c \\
+      ~
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+      X&\rightarrow 1A \\
+      X&\rightarrow 0A' \\
+      A&\rightarrow 1A \\
+      A&\rightarrow A' \\
+      A'&\rightarrow 0A' \\
+      A'&\rightarrow \varepsilon
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+      Y&\rightarrow 0B \\
+      Y&\rightarrow 1B' \\
+      B&\rightarrow 0B \\
+      B&\rightarrow B' \\
+      B'&\rightarrow 1B' \\
+      B'&\rightarrow \varepsilon
+    \end{align*}
+  \end{multicols}
+
+  Una gramática en forma normal de Chomsky equivalente es: \vspace{-7mm}
+  
+  \begin{multicols}{3}
+    \begin{align*}
+      S&\rightarrow D_{Xc}Y \\
+      S&\rightarrow D_{AH}B \\
+      S&\rightarrow AH \\
+      S&\rightarrow HB \\
+      S&\rightarrow E_{01AT}E_{B10} \\
+      S&\rightarrow E_{01AT}D_{10} \\
+      S&\rightarrow E_{01TB}D_{10} \\
+      S&\rightarrow E_{01T}D_{10} \\
+      ~ \\
+      H&\rightarrow E_{01AT}E_{B10} \\
+      H&\rightarrow E_{01AT}D_{10} \\
+      H&\rightarrow E_{01TB}D_{10} \\
+      H&\rightarrow E_{01T}D_{10} \\
+      ~ \\
+      T&\rightarrow E_{01AT}E_{B10} \\
+      T&\rightarrow E_{01AT}D_{10} \\
+      T&\rightarrow E_{01TB}D_{10} \\
+      T&\rightarrow E_{01T}D_{10} \\
+      T&\rightarrow c \\
+      ~ \\ ~ \\ ~ \\ ~ \\ ~
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+      X&\rightarrow C_1A \\
+      X&\rightarrow C_0A' \\
+      X&\rightarrow 0 \\
+      X&\rightarrow 1 \\
+      A&\rightarrow C_1A \\
+      A&\rightarrow C_0A' \\
+      A&\rightarrow 1 \\
+      A&\rightarrow 0 \\
+      A'&\rightarrow C_0A' \\
+      A'&\rightarrow 0 \\
+      ~ \\
+      Y&\rightarrow C_0B \\
+      Y&\rightarrow C_1B' \\
+      Y&\rightarrow 1 \\
+      Y&\rightarrow 0 \\
+      B&\rightarrow C_0B \\
+      B&\rightarrow C_1B' \\
+      B&\rightarrow 0 \\
+      B&\rightarrow 1 \\
+      B'&\rightarrow C_1B' \\
+      B'&\rightarrow 1 \\
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+      D_{Xc}&\rightarrow XC_c \\
+      D_{AH}&\rightarrow AH \\
+      D_{01}&\rightarrow C_0C_1 \\
+      D_{10}&\rightarrow C_1C_0 \\
+      D_{AT}&\rightarrow AT \\
+      D_{TB}&\rightarrow TB \\
+      ~ \\
+      E_{01AT}&\rightarrow D_{01}D_{AT} \\
+      E_{B10}&\rightarrow BD_{10} \\
+      E_{01TB}&\rightarrow D_{01}D_{TB} \\
+      E_{01T}&\rightarrow D_{01}T \\
+      ~ \\
+      C_c&\rightarrow c \\
+      C_0&\rightarrow 0 \\
+      C_1&\rightarrow 1 \\
+      ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~
+    \end{align*}
+  \end{multicols}
+
+  Ahora aplicaré el algoritmo CYK sobre la palabra $010c101$:
+
+  \begin{table}[H]
+    \centering
+  \begin{tabular}{|c|cccccc} \hline 0 & \multicolumn{1}{c|}{1} &
+\multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{c} &
+\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} &
+\multicolumn{1}{c|}{1} \\ \hline \shortstack{$X,A,A'$ \\ $Y,B,C_0$} &
+\multicolumn{1}{c|}{\shortstack{$X,A,Y$ \\ $B,B',C_1$}} &
+\multicolumn{1}{c|}{\shortstack{$X,A,A'$ \\ $Y,B,C_0$}} & \multicolumn{1}{c|}{$T,C_c$} &
+\multicolumn{1}{c|}{\shortstack{$X,A,Y$ \\ $B,B',C_1$}} &
+\multicolumn{1}{c|}{\shortstack{$X,A,A'$ \\ $Y,B,C_0$}} &
+\multicolumn{1}{c|}{\shortstack{$X,A,Y$ \\ $B,B',C_1$}} \\ \hline $Y,B,D_{01}$ &
+\multicolumn{1}{c|}{$X,A,D_{10}$} &
+\multicolumn{1}{c|}{$D_{Xc},D_{AT}$} & \multicolumn{1}{c|}{$D_{TB}$} &
+\multicolumn{1}{c|}{$X,A,D_{10}$} & \multicolumn{1}{c|}{$Y,B,D_{01}$}
+& \\ \cline{1-6} $E_{B10}$ & \multicolumn{1}{c|}{$D_{Xc},D_{AT}$} &
+\multicolumn{1}{c|}{$S$} & \multicolumn{1}{c|}{$\O$} &
+\multicolumn{1}{c|}{$\O$} & & \\ \cline{1-5} $E_{01AT}$ &
+\multicolumn{1}{c|}{$S$} & \multicolumn{1}{c|}{$\O$} &
+\multicolumn{1}{c|}{$\O$} & & & \\ \cline{1-4} $\O$ &
+\multicolumn{1}{c|}{$\O$} & \multicolumn{1}{c|}{$\O$} & & & & \\
+\cline{1-3} $S,H,T$ & \multicolumn{1}{c|}{$\O$} & & & & & \\
+\cline{1-2} $S,D_{TB}$ & & & & & & \\ \cline{1-1}
+  \end{tabular}
+\end{table}
+
+$S$ aparece en la última casilla, por tanto la palabra es generada.
+  
+\end{exercise}
+
+~
+
+\setcounter{exercise}{14}
+
+\begin{exercise}~ Encuentra una gramática libre de contexto en forma
+  normal de Chomsky que genere los siguientes lenguajes sobre
+  $\{a,0,1\}$:
+  \[L_1=\{auava\ |\ u,v \in \{0,1\}^+ \text{ y } u^{-1}=v\}\]
+  \vspace{-15mm}
+  \begin{multicols}{3}
+    \begin{align*}
+      S&\rightarrow aHa \\
+      H&\rightarrow 1T1 \\
+      H&\rightarrow 0T0    
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+      T&\rightarrow 1T1 \\
+      T&\rightarrow 0T0 \\
+      T&\rightarrow a    
+    \end{align*}
+
+    \columnbreak
+
+  \end{multicols}
+
+  Gramática equivalente en forma normal de Chomsky: \vspace{-5mm}
+  \begin{multicols}{4}
+    \begin{align*}
+      S&\rightarrow D_{aH}C_a \\
+      H&\rightarrow D_{1T}C_1 \\
+      H&\rightarrow D_{0T}C_0    
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+      T&\rightarrow D_{1T}C_1 \\
+      T&\rightarrow D_{0T}C_0 \\
+      T&\rightarrow a    
+    \end{align*}
+
+    \columnbreak
+
+    \begin{align*}
+       D_{aH}&\rightarrow C_aH \\
+      D_{1T}&\rightarrow C_1T \\
+      D_{0T}&\rightarrow C_0T    
+    \end{align*}
+
+    \begin{align*}
+      C_a&\rightarrow a \\
+      C_0&\rightarrow 0 \\
+      C_1&\rightarrow 1         
+    \end{align*}
+
+  \end{multicols}
+
+  Comprueba con el algoritmo CYK si $a0a0a$ pertenece a $L_1$:
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|cccc} \hline a & \multicolumn{1}{c|}{0} &
+\multicolumn{1}{c|}{a} & \multicolumn{1}{c|}{0} &
+\multicolumn{1}{c|}{a} \\ \hline $C_a,T$ & \multicolumn{1}{c|}{$C_0$}
+& \multicolumn{1}{c|}{$C_a,T$} & \multicolumn{1}{c|}{$C_0$} &
+\multicolumn{1}{c|}{$C_1,T$} \\ \hline $\O$ &
+\multicolumn{1}{c|}{$D_{0T}$} & \multicolumn{1}{c|}{$\O$} & & \\
+\cline{1-3} $\O$ & \multicolumn{1}{c|}{$H$} &
+\multicolumn{1}{c|}{$\O$} & & \\ \cline{1-3} $D_{aH}$ &
+\multicolumn{1}{c|}{$\O$} & & & \\ \cline{1-2} $S$ & & & & \\
+\cline{1-1}
+    \end{tabular}
+  \end{table}
+
+  $S$ aparece en la última casilla, por tanto la palabra pertenece al
+  lenguaje.
+
+  \newpage
+  
+  \[L_2=\{uvu\ |\ u \in \{0,1\}^+ \text{ y } u^{-1}=v\}\vspace{5mm}\]
+  
+  Este lenguaje no es independiente del contexto, lo probaré con el
+  lema de bombeo. Sea $n\in \mathbb{N}$ arbitrario.\\ 
+
+  La palabra $z=0^n1^n1^n0^n0^n1^n$ pertenece a $L_2$ y tiene longitud
+  $6n \geq n$. Tomaremos $c_1=c_3=0^n1^n$, $c_2=1^n0^n$, luego
+  $z=c_1c_2c_3$. \\
+
+  Para toda descomposición $z=uxvyw$, $\alpha=xvy$ con
+  $|\alpha|\leq n$ y $|xy|\geq 1$.
+
+  \begin{itemize}
+  \item $\alpha = 0^k1^l \quad n \geq k+l,\ k,l\geq 1$
+    \begin{itemize}
+    \item Si son de $c_1$, al hacer $ux^2vy^2w=z'=c_1'c_2c_3$ tendré
+      $c_1'\neq c_3$, luego $z' \notin L_2$.
+    \item Si son de $c_3$, al hacer $ux^2vy^2w=z'=c_1c_2c_3'$ tendré
+      $c_1\neq c_3'$, luego $z' \notin L_2$.
+    \end{itemize}
+  \item $\alpha = 1^k0^l \quad n \geq k+l,\ k,l\geq 1$
+    \begin{itemize}
+    \item Deben ser de $c_2$, al hacer $ux^2vy^2w=z'=c_1c_2'c_3$ tendré
+      $c_1^{-1}\neq c_2'$, luego $z' \notin L_2$.
+    \end{itemize}
+
+  \item $\alpha = 1^k \quad n \geq k\geq 1$
+    \begin{itemize}
+    \item Si alguno es de $c_1$ (aunque otros sean de $c_2$), al hacer
+      $ux^2vy^2w=z'=c_1'c_2'c_3$ tendré $c_1'\neq c_3$, luego
+      $z' \notin L_2$.
+    \item Si alguno es de $c_2$ (aunque otros sean de $c_1$), al hacer
+      $ux^2vy^2w=z'=c_1'c_2'c_3$ tendré $c_2'\neq c_3^{-1}$, luego
+      $z' \notin L_2$.
+    \item Si son de $c_3$, al hacer $ux^2vy^2w=z'=c_1c_2c_3'$ tendré
+      $c_1\neq c_3'$, luego $z' \notin L_2$.
+    \end{itemize}
+
+    \item $\alpha = 0^k \quad n \geq k\geq 1$
+    \begin{itemize}
+    \item Si alguno es de $c_2$ (aunque otros sean de $c_3$), al hacer
+      $ux^2vy^2w=z'=c_1c_2'c_3'$ tendré $c_1^{-1}\neq c_2$, luego
+      $z' \notin L_2$.
+    \item Si alguno es de $c_3$ (aunque otros sean de $c_2$), al hacer
+      $ux^2vy^2w=z'=c_1c_2'c_3'$ tendré $c_1\neq c_3'$, luego
+      $z' \notin L_2$.
+    \item Si son de $c_1$, al hacer $ux^2vy^2w=z'=c_1'c_2c_3$ tendré
+      $c_1'\neq c_3$, luego $z' \notin L_2$.
+    \end{itemize}
+  \end{itemize}
+\end{exercise}
+
+~
+
+\setcounter{exercise}{20}
+
+\begin{exercise}~ Si $L_1$ y $L_2$ son lenguajes sobre el alfabeto
+  $A$, entonces se define el cociente
+  $L_1/L_2=\{u\in A^*\ |\ \exists w \in L_2 \text{ tal que } uw \in
+  L_1\}$. Demostrar que si $L_1$ es independiente del contexto y $L_2$
+  regular, entonces $L_1/L_2$ es independiente del contexto.
+  
+\end{exercise}
+
+~
+
+\begin{exercise}~ Si $L$ es un lenguaje sobre $\{0,1\}$, sea $SUF(L)$
+  el conjunto de los sufijos de palabras de L:
+  $SUF(L)=\{u\in\{0,1\}^*\ |\ \exists v \in \{0,1\}^*, \text{ tal que
+  } vu \in L\}$. Demostrar que si $L$ es independiente del contexto,
+  entonces $SUF(L)$ también es independiente del contexto. 
+  
+\end{exercise}
+
+\end{document}
