@@ -371,7 +371,7 @@ $S$ aparece en la última casilla, por tanto la palabra es generada.
   \end{itemize}
 \end{exercise}
 
-~
+\newpage
 
 \setcounter{exercise}{20}
 
@@ -379,8 +379,27 @@ $S$ aparece en la última casilla, por tanto la palabra es generada.
   $A$, entonces se define el cociente
   $L_1/L_2=\{u\in A^*\ |\ \exists w \in L_2 \text{ tal que } uw \in
   L_1\}$. Demostrar que si $L_1$ es independiente del contexto y $L_2$
-  regular, entonces $L_1/L_2$ es independiente del contexto.
-  
+  regular, entonces $L_1/L_2$ es independiente del contexto. \\
+
+  Existirá un autómata no determinista con pila que acepte $L_1$ por
+  el criterio de estados finales
+  \[M=(Q, A, B, \delta, q_0, R, F)\]
+
+  Defino el autómata
+  \[M'=(Q\cup\{q_f\}, A, B, \delta', q_0, R, \{q_f\})\]
+
+  Donde $\delta'$ es un extensión de $\delta$, añadiendo transiciones
+  a algunas configuraciones
+  \[\delta'(q, \varepsilon, H)=\delta(q, \varepsilon, H)\cup\{(q_f,
+    H)\}\]
+  $\forall q\in Q,\ H \in B \text{ tales que } \exists w \in L_2
+  \text{ cumpliendo } \delta^*(q, w, H)\cap F\times B^* \neq \O$ \\
+
+  En otras palabras, $M'$ acepta (por estados finales) únicamente las
+  palabras $u$ que al leerse completamente llevan a una configuración
+  para la que existe una palabra $w \in L_2$ que lleva esa
+  configuración a un estado final de $M$. Es decir, palabras $u$ tales
+  que existe $w \in L_2$ cumpliendo $uw\in L_1$.
 \end{exercise}
 
 ~
@@ -389,8 +408,23 @@ $S$ aparece en la última casilla, por tanto la palabra es generada.
   el conjunto de los sufijos de palabras de L:
   $SUF(L)=\{u\in\{0,1\}^*\ |\ \exists v \in \{0,1\}^*, \text{ tal que
   } vu \in L\}$. Demostrar que si $L$ es independiente del contexto,
-  entonces $SUF(L)$ también es independiente del contexto. 
+  entonces $SUF(L)$ también es independiente del contexto. \\
+
+  Existirá un autómata no determinista con pila que acepte $L$ por
+  el criterio de estados finales
+  \[M=(Q, A, B, \delta, q_0, R, F)\]
+
+  Defino el autómata
+  \[M'=(Q\cup\{q_0'\}, A, B, \delta', q_0', R, F)\]
   
+  Donde $\delta'$ es una extensión de $\delta$, añadiendo las
+  siguientes transiciones:
+  \[\delta'(q_0', \varepsilon, R)=\{(q, H)\ |\ \exists v \in
+    \{0,1\}^*, \text{ tal que } (q, H) \in \delta^*(q_0, v, R)\}\] Las
+  palabras $u$ aceptadas por este autómata son las que llegan a un
+  estado final partiendo de cualquier configuración accesible desde
+  $(q_0, R)$ por medio de una palabra $v\in\{0,1\}^*$. Es decir,
+  palabras $u$ tales que existe $v$ cumpliendo $vu\in L$.
 \end{exercise}
 
 \end{document}
